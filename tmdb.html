@@ -15,7 +15,7 @@
         <br>
         <iframe id="trailer">
         </iframe>
-        <h3 id="detail-title"></h3>
+        <h3 id="detail-title"> </h3>
         <p id="detail-overview"></p>
     </div>
 
@@ -29,7 +29,7 @@
     </div>
 
     <button type="submit" id="popular-btn">See Popular</button>
-    <button type="submit" id="latest-btn">See Top-Rated</button>
+    <button type="submit" id="top-rated-btn">See Top-Rated</button>
 
     <h2 id="heading">See Popular</h2>
 
@@ -80,8 +80,8 @@
         const popularButton = document.getElementById("popular-btn");
         popularButton.addEventListener("click", seePopular, false);
 
-        const latestButton = document.getElementById("latest-btn");
-        latestButton.addEventListener("click", seeTopRated, false);
+        const topRatedButton = document.getElementById("top-rated-btn");
+        topRatedButton.addEventListener("click", seeTopRated, false);
 
         var heading = document.getElementById("heading");
 
