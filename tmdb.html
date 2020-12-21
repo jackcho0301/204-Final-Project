@@ -15,6 +15,8 @@
         <br>
         <iframe id="trailer">
         </iframe>
+        <h3 id="detail-title"></h3>
+        <p id="detail-overview"></p>
     </div>
 
     <div id="form_container">
@@ -91,6 +93,10 @@
 
         var movieTitle = "";
 
+        var detailTitle = document.getElementById("detail-title");
+        var detailOverview = document.getElementById("detail-overview");
+        
+
         var hiddenDiv = document.getElementById("hidden-div");
 
         var closeButton = document.getElementById("close_button");
@@ -157,6 +163,9 @@
                     console.log("overview: " + movieById.overview);
                     console.log("release date: " + movieById.release_date);
                     console.log("runtime: " + movieById.runtime);
+
+                    detailTitle.innerHTML = movieById.original_title;
+                    detailOverview.innerHTML = movieById.overview;
                     
                 
                 }
