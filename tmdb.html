@@ -32,6 +32,12 @@
     <h2 id="heading">See Popular</h2>
 
     <div id="container">
+
+    </div>
+
+    <div id="attribution-container">
+        Attribution:
+        <img id="attribution" src="tmdb_logo.png" alt="TMDB ATTRIBUTION" />
     </div>
 
 
@@ -242,13 +248,13 @@
                         if (results.results[i].poster_path != null) {
                             var poster = document.createElement("img");
                             poster.setAttribute("src", "https://image.tmdb.org/t/p/original" + results.results[i].poster_path);
-                            poster.setAttribute("class", "posters")
+                            poster.setAttribute("class", "posters");
                             posterContainer.appendChild(poster);
                         }
                         if (results.results[i].poster_path == null) {
                             var poster = document.createElement("img");
                             poster.setAttribute("src", "poster_null.png");
-                            poster.setAttribute("class", "posters")
+                            poster.setAttribute("class", "posters");
                             posterContainer.appendChild(poster);
                         }
                     }

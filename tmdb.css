@@ -37,10 +37,15 @@ body{
     margin-left: auto;
     margin-right: auto;
     z-index: -1;
-    bordeR: 1px solid red;
+    border: 1px solid red;
 }
 
 #trailer {
     width: 800px;
     height: 500px;
+}
+
+#attribution{
+    width: 100px;
+    height: 73px;
 }
