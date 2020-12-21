@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Movie Search</title>
+    <link href="tmdb.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+
+
+    <!-- <div id="big">
+        <button class="btn" id="close_button">CLOSE</button>
+        <button class="btn" id="prev_button">&lt;</button>
+        <button class="btn" id="next_button">&gt;</button>
+      </div> -->
+
+    <div id="form_container">
+        <form id="form">
+            <label for="input">Search Movie:</label>
+                <!-- <input type="text" class="form-control" id="first-name" value="Michael" required> -->
+                <input type="text" id="input">
+                <button type="submit" id="search-btn">Add</button>
+        </form>
+    </div>
+
+    <button type="submit" id="popular-btn">See Popular</button>
+    <button type="submit" id="latest-btn">See Latest</button>
+
+    <div id="container">
+    </div>
+
+
+
+    <script>
+
+
+
+        const form = document.getElementById("form");
+        form.addEventListener("submit", search, false);
+
+        const popularButton = document.getElementById("popular-btn");
+        popularButton.addEventListener("click", seePopular, false);
+
+        const latestButton = document.getElementById("latest-btn");
+        latestButton.addEventListener("click", seeTopRated, false);
+
+        seePopular();
+
+        function seePopular() {
+            var posterContainer = document.getElementById("container");
+            posterContainer.innerHTML = "";
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var results = JSON.parse(this.responseText);
+                    
+                    for (var i = 0; i < results.results.length; i++) {
+                        if (results.results[i].poster_path != null) {
+                            var poster = document.createElement("img");
+                            poster.setAttribute("src", "https://image.tmdb.org/t/p/original" + results.results[i].poster_path);
+                            posterContainer.appendChild(poster);
+                        }
+                        if (results.results[i].poster_path == null) {
+                            var poster = document.createElement("img");
+                            poster.setAttribute("src", "poster_null.png");
+                            posterContainer.appendChild(poster);
+                        }
+                    }
+                }
+            };
+            xhttp.open("GET", "https://api.themoviedb.org/3/movie/popular?api_key=0c1cfc186512612b10c8d9f9fe03adb2&language=en-US&page=1", true);
+            xhttp.send();
+        }
+
+        function seeTopRated() {
+            var posterContainer = document.getElementById("container");
+            posterContainer.innerHTML = "";
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var results = JSON.parse(this.responseText);
+                    
+                    for (var i = 0; i < results.results.length; i++) {
+                        if (results.results[i].poster_path != null) {
+                            var poster = document.createElement("img");
+                            poster.setAttribute("src", "https://image.tmdb.org/t/p/original" + results.results[i].poster_path);
+                            posterContainer.appendChild(poster);
+                        }
+                        if (results.results[i].poster_path == null) {
+                            var poster = document.createElement("img");
+                            poster.setAttribute("src", "poster_null.png");
+                            posterContainer.appendChild(poster);
+                        }
+                    }
+                }
+            };
+            xhttp.open("GET", "https://api.themoviedb.org/3/movie/top_rated?api_key=0c1cfc186512612b10c8d9f9fe03adb2&language=en-US&page=1", true);
+            xhttp.send();
+        }
+
+        function search(event) {
+            event.preventDefault();
+            var input = document.getElementById("input");
+            var inputValue = input.value;
+            console.log(inputValue);
+
+            var posterContainer = document.getElementById("container");
+            posterContainer.innerHTML = "";
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var results = JSON.parse(this.responseText);
+                    console.log("inputValue is " + inputValue);
+                    for (var i = 0; i < results.results.length; i++) {
+                        if (results.results[i].poster_path != null) {
+                            console.log(results.results[i].poster_path);
+                            var poster = document.createElement("img");
+                            poster.setAttribute("src", "https://image.tmdb.org/t/p/original" + results.results[i].poster_path);
+                            posterContainer.appendChild(poster);
+                        }
+                        if (results.results[i].poster_path == null) {
+                            var poster = document.createElement("img");
+                            poster.setAttribute("src", "poster_null.png");
+                            posterContainer.appendChild(poster);
+                        }
+                    }
+                }
+            };
+            xhttp.open("GET", "https://api.themoviedb.org/3/search/movie?api_key=0c1cfc186512612b10c8d9f9fe03adb2&query=" + inputValue, true);
+            xhttp.send();
+        }
+    </script>
+
+</body>
+
+</html>
