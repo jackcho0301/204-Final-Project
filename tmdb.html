@@ -67,6 +67,10 @@
         //https://www.youtube.com/watch?v=
 
 
+        //finding movie by id:
+        //https://api.themoviedb.org/3/movie/7191?api_key=0c1cfc186512612b10c8d9f9fe03adb2&language=en-US
+
+
 
         const form = document.getElementById("form");
         form.addEventListener("submit", search, false);
@@ -85,7 +89,7 @@
 
         var movieId = " ";
 
-        var movieName = "";
+        var movieTitle = "";
 
         var hiddenDiv = document.getElementById("hidden-div");
 
@@ -93,6 +97,8 @@
 
         var allPosters = document.getElementsByClassName("posters");
         closeButton.addEventListener("click", closeHiddenDiv);
+
+        var movieObject = {};
         
 
 
@@ -110,6 +116,8 @@
         seePopular();
 
         function clicked(event) {
+            hiddenDiv.style.zIndex = 1;
+
             console.log("clicked");
             // poster.style.border = "5px solid blue";
             event.target.style.border = "5px solid blue";
@@ -130,7 +138,6 @@
                 else{
                     //trailer not found
                 }
-                    hiddenDiv.style.zIndex = 1;
                 }
                 else if (this.readyState == 4) {
 
@@ -142,6 +149,31 @@
             }
             xhttp.open("GET", "https://api.themoviedb.org/3/movie/" + event.target.id + "/videos?api_key=0c1cfc186512612b10c8d9f9fe03adb2&language=en-US", true);
                 xhttp.send();
+//
+                var xhttp2 = new XMLHttpRequest();
+            xhttp2.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var movieById = JSON.parse(this.responseText);
+                    console.log("overview: " + movieById.overview);
+                    console.log("release date: " + movieById.release_date);
+                    console.log("runtime: " + movieById.runtime);
+                    
+                
+                }
+                else if (this.readyState == 4) {
+
+                    // this.status !== 200, error from server
+                    console.log(this.responseText);
+
+                };
+               
+            }
+            xhttp2.open("GET", "https://api.themoviedb.org/3/movie/" + event.target.id + "?api_key=0c1cfc186512612b10c8d9f9fe03adb2&language=en-US", true);
+                xhttp2.send();
+
+                // https://api.themoviedb.org/3/movie/7191?api_key=0c1cfc186512612b10c8d9f9fe03adb2&language=en-US
+
+                
 
         }
 
