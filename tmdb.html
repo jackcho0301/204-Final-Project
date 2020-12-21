@@ -104,6 +104,9 @@
         var allPosters = document.getElementsByClassName("posters");
         closeButton.addEventListener("click", closeHiddenDiv);
 
+        var posterContainer = document.getElementById("container");
+
+
         var movieObject = {};
         
 
@@ -204,7 +207,6 @@
 
             heading.innerHTML = "Search Result:";
 
-            var posterContainer = document.getElementById("container");
             posterContainer.innerHTML = "";
 
             var xhttp = new XMLHttpRequest();
@@ -217,14 +219,22 @@
                             var poster = document.createElement("img");
                             poster.setAttribute("src", "https://image.tmdb.org/t/p/original" + results.results[i].poster_path);
                             poster.setAttribute("class", "posters");
+                            poster.setAttribute("id", results.results[i].id);
                             posterContainer.appendChild(poster);
                         }
                         if (results.results[i].poster_path == null) {
                             var poster = document.createElement("img");
                             poster.setAttribute("src", "poster_null.png");
                             poster.setAttribute("class", "posters");
+                            poster.setAttribute("id", results.results[i].id);
                             posterContainer.appendChild(poster);
                         }
+                    }
+                    for (var i = 0; i < allPosters.length; i++) {
+                        allPosters[i].style.border = "5px solid white";
+                        allPosters[i].addEventListener("click", clicked);
+                        allPosters[i].addEventListener("mouseover", borderAppear);
+                        allPosters[i].addEventListener("mouseout", borderDisappear);
                     }
 
 
@@ -238,7 +248,6 @@
         function seePopular() {
             heading.innerHTML = "Popular Movies:";
 
-            var posterContainer = document.getElementById("container");
             posterContainer.innerHTML = "";
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -278,7 +287,6 @@
         function seeTopRated() {
             heading.innerHTML = "Top-Rated Movies:";
 
-            var posterContainer = document.getElementById("container");
             posterContainer.innerHTML = "";
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -290,14 +298,23 @@
                             var poster = document.createElement("img");
                             poster.setAttribute("src", "https://image.tmdb.org/t/p/original" + results.results[i].poster_path);
                             poster.setAttribute("class", "posters");
+                            poster.setAttribute("id", results.results[i].id);
+
                             posterContainer.appendChild(poster);
                         }
                         if (results.results[i].poster_path == null) {
                             var poster = document.createElement("img");
                             poster.setAttribute("src", "poster_null.png");
                             poster.setAttribute("class", "posters");
+                            poster.setAttribute("id", results.results[i].id);
                             posterContainer.appendChild(poster);
                         }
+                    }
+                    for (var i = 0; i < allPosters.length; i++) {
+                        allPosters[i].style.border = "5px solid white";
+                        allPosters[i].addEventListener("click", clicked);
+                        allPosters[i].addEventListener("mouseover", borderAppear);
+                        allPosters[i].addEventListener("mouseout", borderDisappear);
                     }
                 }
             };
