@@ -17,9 +17,9 @@
     <div id="form_container">
         <form id="form">
             <label for="input">Search Movie:</label>
-                <!-- <input type="text" class="form-control" id="first-name" value="Michael" required> -->
-                <input type="text" id="input">
-                <button type="submit" id="search-btn">Add</button>
+            <!-- <input type="text" class="form-control" id="first-name" value="Michael" required> -->
+            <input type="text" id="input">
+            <button type="submit" id="search-btn">Add</button>
         </form>
     </div>
 
@@ -33,6 +33,24 @@
     <!-- ++++++++++++++++++++++++++++++++++++++ -->
 
     <script>
+
+        //my key:
+        //0c1cfc186512612b10c8d9f9fe03adb2
+
+        //cloverfield video:
+        // https://www.youtube.com/watch?v=
+        // 8brYvhEg5Aw
+
+        //for video:
+        //use this request:
+        //https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=<<api_key>>&language=en-US
+        //movie id 384521
+        //api key: 0c1cfc186512612b10c8d9f9fe03adb2
+        //ex: 
+        // https://api.themoviedb.org/3/movie/384521/videos?api_key=0c1cfc186512612b10c8d9f9fe03adb2&language=en-US
+        //and then get the key
+        //and append key to:
+        //https://www.youtube.com/watch?v=
 
 
 
@@ -56,7 +74,7 @@
 
             var posterContainer = document.getElementById("container");
             posterContainer.innerHTML = "";
-            
+
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
@@ -81,7 +99,7 @@
             xhttp.open("GET", "https://api.themoviedb.org/3/search/movie?api_key=0c1cfc186512612b10c8d9f9fe03adb2&query=" + inputValue, true);
             xhttp.send();
         }
-          
+
         //see popular movies:
         function seePopular() {
             var posterContainer = document.getElementById("container");
@@ -90,7 +108,7 @@
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     var results = JSON.parse(this.responseText);
-                  
+
                     for (var i = 0; i < results.results.length; i++) {
                         if (results.results[i].poster_path != null) {
                             var poster = document.createElement("img");
@@ -136,7 +154,7 @@
             xhttp.send();
         }
 
-    
+
     </script>
 
 </body>
