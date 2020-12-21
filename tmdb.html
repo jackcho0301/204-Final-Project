@@ -26,6 +26,8 @@
     <button type="submit" id="popular-btn">See Popular</button>
     <button type="submit" id="latest-btn">See Top-Rated</button>
 
+    <h2 id="heading">See Popular</h2>
+
     <div id="container">
     </div>
 
@@ -63,6 +65,9 @@
         const latestButton = document.getElementById("latest-btn");
         latestButton.addEventListener("click", seeTopRated, false);
 
+        var heading = document.getElementById("heading");
+
+
         //see popular upon load:
         seePopular();
 
@@ -87,6 +92,8 @@
             event.preventDefault();
             var input = document.getElementById("input");
             var inputValue = input.value;
+
+            heading.innerHTML = "Search Result:";
 
             var posterContainer = document.getElementById("container");
             posterContainer.innerHTML = "";
@@ -120,6 +127,8 @@
 
         //see popular movies:
         function seePopular() {
+            heading.innerHTML = "Popular Movies:";
+
             var posterContainer = document.getElementById("container");
             posterContainer.innerHTML = "";
             var xhttp = new XMLHttpRequest();
@@ -156,6 +165,8 @@
 
         //see top rated movies:
         function seeTopRated() {
+            heading.innerHTML = "Top-Rated Movies:";
+
             var posterContainer = document.getElementById("container");
             posterContainer.innerHTML = "";
             var xhttp = new XMLHttpRequest();
