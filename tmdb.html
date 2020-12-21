@@ -66,6 +66,19 @@
         //see popular upon load:
         seePopular();
 
+        function clicked(event) {
+            console.log("clicked");
+            // poster.style.border = "5px solid blue";
+            event.target.style.border = "5px solid blue";
+        }
+
+        function borderAppear(event) {
+            event.target.style.border = "5px solid red";
+        }
+
+        function borderDisappear(event) {
+            event.target.style.border = "5px solid white";
+        }
 
 
 
@@ -97,11 +110,8 @@
                             posterContainer.appendChild(poster);
                         }
                     }
-                    var allPosters = document.getElementsByClassName("posters");
-                    for (var i = 0; i < allPosters.length; i++) {
-                        allPosters[i].style.border = "5px solid blue";
+                   
 
-                    }
                 }
             };
             xhttp.open("GET", "https://api.themoviedb.org/3/search/movie?api_key=0c1cfc186512612b10c8d9f9fe03adb2&query=" + inputValue, true);
@@ -130,6 +140,13 @@
                             poster.setAttribute("class", "posters")
                             posterContainer.appendChild(poster);
                         }
+                    }
+                    var allPosters = document.getElementsByClassName("posters");
+                    for (var i = 0; i < allPosters.length; i++) {
+                        allPosters[i].style.border = "5px solid white";
+                        allPosters[i].addEventListener("click", clicked);
+                        allPosters[i].addEventListener("mouseover", borderAppear);
+                        allPosters[i].addEventListener("mouseout", borderDisappear);
                     }
                 }
             };
