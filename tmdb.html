@@ -8,11 +8,14 @@
 
 <body>
 
-    <!-- <div id="big">
+    <div id="hidden-div">
         <button class="btn" id="close_button">CLOSE</button>
         <button class="btn" id="prev_button">&lt;</button>
         <button class="btn" id="next_button">&gt;</button>
-      </div> -->
+        <br>
+        <iframe id="trailer">
+        </iframe>
+    </div>
 
     <div id="form_container">
         <form id="form">
@@ -38,6 +41,9 @@
 
         //my key:
         //0c1cfc186512612b10c8d9f9fe03adb2
+
+        //search eg:
+        //https://api.themoviedb.org/3/search/movie?api_key=0c1cfc186512612b10c8d9f9fe03adb2&query=Cloverfield
 
         //cloverfield video:
         // https://www.youtube.com/watch?v=
@@ -67,6 +73,32 @@
 
         var heading = document.getElementById("heading");
 
+        var trailer = document.getElementById("trailer");
+
+        var trailerKey = " ";
+
+        var movieId = " ";
+
+        var movieName = "";
+
+        var hiddenDiv = document.getElementById("hidden-div");
+
+        var closeButton = document.getElementById("close_button");
+
+        var allPosters = document.getElementsByClassName("posters");
+        closeButton.addEventListener("click", closeHiddenDiv);
+        
+
+
+        function closeHiddenDiv () {
+            hiddenDiv.style.zIndex = -1;
+            trailer.setAttribute("src", "");
+            for (var i = 0; i < allPosters.length; i++) {
+                allPosters[i].style.opacity = 1;
+            }
+        }
+
+
 
         //see popular upon load:
         seePopular();
@@ -75,6 +107,36 @@
             console.log("clicked");
             // poster.style.border = "5px solid blue";
             event.target.style.border = "5px solid blue";
+            // trailer.setAttribute("src", "https://www.youtube.com/embed" + )
+            console.log(event.target.id);
+
+            for (var i = 0; i < allPosters.length; i++) {
+                allPosters[i].style.opacity = 0.5;
+            }
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var videoRequest = JSON.parse(this.responseText);
+                    // console.log(videoRequest.results[0].key);
+                    if(videoRequest.results.length > 0){
+                    trailer.setAttribute("src", "https://www.youtube.com/embed/" + videoRequest.results[0].key);
+                }
+                else{
+                    //trailer not found
+                }
+                    hiddenDiv.style.zIndex = 1;
+                }
+                else if (this.readyState == 4) {
+
+                    // this.status !== 200, error from server
+                    console.log(this.responseText);
+
+                };
+               
+            }
+            xhttp.open("GET", "https://api.themoviedb.org/3/movie/" + event.target.id + "/videos?api_key=0c1cfc186512612b10c8d9f9fe03adb2&language=en-US", true);
+                xhttp.send();
+
         }
 
         function borderAppear(event) {
@@ -117,7 +179,7 @@
                             posterContainer.appendChild(poster);
                         }
                     }
-                   
+
 
                 }
             };
@@ -140,17 +202,19 @@
                         if (results.results[i].poster_path != null) {
                             var poster = document.createElement("img");
                             poster.setAttribute("src", "https://image.tmdb.org/t/p/original" + results.results[i].poster_path);
-                            poster.setAttribute("class", "posters")
+                            poster.setAttribute("class", "posters");
+                            poster.setAttribute("id", results.results[i].id);
                             posterContainer.appendChild(poster);
                         }
                         if (results.results[i].poster_path == null) {
                             var poster = document.createElement("img");
                             poster.setAttribute("src", "poster_null.png");
-                            poster.setAttribute("class", "posters")
+                            poster.setAttribute("class", "posters");
+                            poster.setAttribute("id", results.results[i].id);
                             posterContainer.appendChild(poster);
                         }
                     }
-                    var allPosters = document.getElementsByClassName("posters");
+                    
                     for (var i = 0; i < allPosters.length; i++) {
                         allPosters[i].style.border = "5px solid white";
                         allPosters[i].addEventListener("click", clicked);

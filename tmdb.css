@@ -1,12 +1,18 @@
+html { 
+    background-color: white;
+}
+
 body{
     padding: 0;
     margin: 0;
+    z-index: 0;
+    background-color: white;
 }
 #container{
     padding: 10px;
     z-index: 0;
     background-color: white;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     width: 98%;
     /* padding-left: 0px; */
     /* padding-right: 10px; */
@@ -19,6 +25,22 @@ body{
     height: 450px;
     /* border: 5px solid white; */
     opacity: 1.0;
-    border: 1px solid red;
+    /* border: 1px solid red; */
+}
 
+#hidden-div{
+    top: 20px;
+    position: fixed;
+    height: 720px;
+    width: 800px;
+    left: 310px;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: -1;
+    bordeR: 1px solid red;
+}
+
+#trailer {
+    width: 800px;
+    height: 500px;
 }
