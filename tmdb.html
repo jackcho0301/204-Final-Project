@@ -8,7 +8,6 @@
 
 <body>
 
-
     <!-- <div id="big">
         <button class="btn" id="close_button">CLOSE</button>
         <button class="btn" id="prev_button">&lt;</button>
@@ -25,12 +24,13 @@
     </div>
 
     <button type="submit" id="popular-btn">See Popular</button>
-    <button type="submit" id="latest-btn">See Latest</button>
+    <button type="submit" id="latest-btn">See Top-Rated</button>
 
     <div id="container">
     </div>
 
 
+    <!-- ++++++++++++++++++++++++++++++++++++++ -->
 
     <script>
 
@@ -45,8 +45,44 @@
         const latestButton = document.getElementById("latest-btn");
         latestButton.addEventListener("click", seeTopRated, false);
 
+        //see popular upon load:
         seePopular();
 
+        //search movies:
+        function search(event) {
+            event.preventDefault();
+            var input = document.getElementById("input");
+            var inputValue = input.value;
+
+            var posterContainer = document.getElementById("container");
+            posterContainer.innerHTML = "";
+            
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var results = JSON.parse(this.responseText);
+                    console.log("inputValue is " + inputValue);
+                    for (var i = 0; i < results.results.length; i++) {
+
+                        if (results.results[i].poster_path != null) {
+                            console.log(results.results[i].poster_path);
+                            var poster = document.createElement("img");
+                            poster.setAttribute("src", "https://image.tmdb.org/t/p/original" + results.results[i].poster_path);
+                            posterContainer.appendChild(poster);
+                        }
+                        if (results.results[i].poster_path == null) {
+                            var poster = document.createElement("img");
+                            poster.setAttribute("src", "poster_null.png");
+                            posterContainer.appendChild(poster);
+                        }
+                    }
+                }
+            };
+            xhttp.open("GET", "https://api.themoviedb.org/3/search/movie?api_key=0c1cfc186512612b10c8d9f9fe03adb2&query=" + inputValue, true);
+            xhttp.send();
+        }
+          
+        //see popular movies:
         function seePopular() {
             var posterContainer = document.getElementById("container");
             posterContainer.innerHTML = "";
@@ -54,7 +90,7 @@
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     var results = JSON.parse(this.responseText);
-                    
+                  
                     for (var i = 0; i < results.results.length; i++) {
                         if (results.results[i].poster_path != null) {
                             var poster = document.createElement("img");
@@ -73,6 +109,7 @@
             xhttp.send();
         }
 
+        //see top rated movies:
         function seeTopRated() {
             var posterContainer = document.getElementById("container");
             posterContainer.innerHTML = "";
@@ -80,7 +117,7 @@
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     var results = JSON.parse(this.responseText);
-                    
+
                     for (var i = 0; i < results.results.length; i++) {
                         if (results.results[i].poster_path != null) {
                             var poster = document.createElement("img");
@@ -99,37 +136,7 @@
             xhttp.send();
         }
 
-        function search(event) {
-            event.preventDefault();
-            var input = document.getElementById("input");
-            var inputValue = input.value;
-            console.log(inputValue);
-
-            var posterContainer = document.getElementById("container");
-            posterContainer.innerHTML = "";
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    var results = JSON.parse(this.responseText);
-                    console.log("inputValue is " + inputValue);
-                    for (var i = 0; i < results.results.length; i++) {
-                        if (results.results[i].poster_path != null) {
-                            console.log(results.results[i].poster_path);
-                            var poster = document.createElement("img");
-                            poster.setAttribute("src", "https://image.tmdb.org/t/p/original" + results.results[i].poster_path);
-                            posterContainer.appendChild(poster);
-                        }
-                        if (results.results[i].poster_path == null) {
-                            var poster = document.createElement("img");
-                            poster.setAttribute("src", "poster_null.png");
-                            posterContainer.appendChild(poster);
-                        }
-                    }
-                }
-            };
-            xhttp.open("GET", "https://api.themoviedb.org/3/search/movie?api_key=0c1cfc186512612b10c8d9f9fe03adb2&query=" + inputValue, true);
-            xhttp.send();
-        }
+    
     </script>
 
 </body>
