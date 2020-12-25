@@ -48,12 +48,6 @@ var heading = document.getElementById("heading");
 //iframe for trailer
 var trailer = document.getElementById("trailer");
 
-var trailerKey = " ";      //xx
-
-var movieId = " ";         //xx
-
-var movieTitle = "";        //xx
-
 //title of clicked movie
 var detailTitle = document.getElementById("detail-title");
 
@@ -72,8 +66,6 @@ closeButton.addEventListener("click", closeHiddenDiv);
 //container that displays all posters on page
 var posterContainer = document.getElementById("container");
 
-
-var movieObject = {};       //xx
 
 
 
