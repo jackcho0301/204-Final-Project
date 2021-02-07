@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Movie Search</title>
+    <link href="style.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Credit:
+This project uses API from TMDB (The Movie Database)
+https://www.themoviedb.org/ -->
+
+    <div id="hidden-div">
+        <button class="btn" id="close_button">CLOSE</button>
+        <br>
+        <iframe id="trailer">
+        </iframe>
+        <div id="detail-poster-container">
+        </div>
+        <h4 id="detail-title">Title</h4>
+        <p id="detail-release-date"></p>
+        <p id="detail-runtime"></p>
+        <p id="detail-overview"></p>
+    </div>
+
+    <div id="form-container">
+        <div id="buttons">
+            <button type="submit" id="popular-btn">See Popular</button>
+            <button type="submit" id="top-rated-btn">See Top-Rated</button>
+        </div>
+
+        <form id="form">
+            <label for="input">Search Movies:</label>
+            <input type="text" id="input">
+            <button type="submit" id="search-btn">Search</button>
+        </form>
+    </div>
+
+    <h2 id="heading">See Popular</h2>
+
+    <div id="container">
+
+    </div>
+
+    <div id="attribution-container">
+
+        <div id="attpic">
+            <img id="attribution" src="tmdb_logo.png" alt="TMDB ATTRIBUTION" />
+        </div>
+    </div>
+
+    <script src="javascript.js"></script>
+
+</body>
+
+</html>

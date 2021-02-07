@@ -1,3 +1,8 @@
+//Credit:
+//This project uses API from TMDB (The Movie Database)
+//https://www.themoviedb.org/
+
+
 //my api key:
 //0c1cfc186512612b10c8d9f9fe03adb2
 
@@ -30,8 +35,6 @@
 
 //overview may be too long, use overflow
 
-//get genre
-
 
 const form = document.getElementById("form");
 form.addEventListener("submit", search, false);
@@ -51,8 +54,20 @@ var trailer = document.getElementById("trailer");
 //title of clicked movie
 var detailTitle = document.getElementById("detail-title");
 
+var detailReleaseDate = document.getElementById("detail-release-date");
+
 //overview of clicked movie
 var detailOverview = document.getElementById("detail-overview");
+
+var detailPoster = document.createElement("img");
+detailPoster.setAttribute("id", "detail-poster");
+
+var detailPosterContainer = document.getElementById("detail-poster-container");
+detailPosterContainer.appendChild(detailPoster);
+
+
+var detailRuntime = document.getElementById("detail-runtime");
+
 
 
 var hiddenDiv = document.getElementById("hidden-div");
@@ -66,12 +81,18 @@ closeButton.addEventListener("click", closeHiddenDiv);
 //container that displays all posters on page
 var posterContainer = document.getElementById("container");
 
+var trailerExists = new Boolean(false);
+
 
 
 
 function closeHiddenDiv() {
+    // detailTitle.innerHTML = " ";
+    detailOverview.innerHTML = "Overview: Not Found";
     hiddenDiv.style.zIndex = -1;
+    hiddenDiv.style.display = "none";
     trailer.setAttribute("src", "");
+    detailPoster.setAttribute("src", "");
     for (var i = 0; i < allPosters.length; i++) {
         allPosters[i].style.opacity = 1;
     }
@@ -84,6 +105,8 @@ seePopular();
 
 function clicked(event) {
     hiddenDiv.style.zIndex = 1;
+    hiddenDiv.style.display = "block";
+
     event.target.style.border = "5px solid blue";
     console.log(event.target.id);
 
@@ -98,10 +121,15 @@ function clicked(event) {
             var videoRequest = JSON.parse(this.responseText);
             // console.log(videoRequest.results[0].key);
             if (videoRequest.results.length > 0) {
+                trailerExists = true;
+                trailer.style.display = "block";
                 trailer.setAttribute("src", "https://www.youtube.com/embed/" + videoRequest.results[0].key);
+                detailPoster.style.display = "none";
             }
             else {
                 //trailer not found; do something here
+                trailerExists = false;
+                        trailer.style.display = "none";
             }
         }
         else if (this.readyState == 4) {
@@ -121,9 +149,26 @@ function clicked(event) {
             console.log("overview: " + movieById.overview);
             console.log("release date: " + movieById.release_date);
             console.log("runtime: " + movieById.runtime);
-
+   
             detailTitle.innerHTML = movieById.title;
-            detailOverview.innerHTML = movieById.overview;
+            detailReleaseDate.innerHTML = "Release Date: " + movieById.release_date;
+            detailRuntime.innerHTML = "Runtime: " + movieById.runtime + " minutes";
+    
+
+            if(movieById.overview != null){
+                detailOverview.innerHTML = movieById.overview;
+            }
+            else{
+                detailOverview.innerHTML = "Overview: Not Found"
+            }
+
+            if (!trailerExists){
+            detailPoster.setAttribute("src", "https://image.tmdb.org/t/p/original" + movieById.poster_path);
+            detailPoster.style.float = "left";
+            detailPoster.style.display = "block";
+            detailPoster.style.marginRight = "10px";
+
+            }
 
         }
         else if (this.readyState == 4) {
@@ -146,7 +191,7 @@ function borderAppear(event) {
 
 //change css when hover off
 function borderDisappear(event) {
-    event.target.style.border = "5px solid white";
+    event.target.style.border = "5px solid black";
 }
 
 
@@ -168,23 +213,16 @@ function search(event) {
             var results = JSON.parse(this.responseText);
             for (var i = 0; i < results.results.length; i++) {
 
-                if (results.results[i].poster_path != null) {
+                if (results.results[i].poster_path != null && results.results[i].overview != "") {
                     var poster = document.createElement("img");
                     poster.setAttribute("src", "https://image.tmdb.org/t/p/original" + results.results[i].poster_path);
                     poster.setAttribute("class", "posters");
                     poster.setAttribute("id", results.results[i].id);
                     posterContainer.appendChild(poster);
                 }
-                if (results.results[i].poster_path == null) {
-                    var poster = document.createElement("img");
-                    poster.setAttribute("src", "poster_null.png");
-                    poster.setAttribute("class", "posters");
-                    poster.setAttribute("id", results.results[i].id);
-                    posterContainer.appendChild(poster);
-                }
             }
             for (var i = 0; i < allPosters.length; i++) {
-                allPosters[i].style.border = "5px solid white";
+                allPosters[i].style.border = "5px solid black";
                 allPosters[i].addEventListener("click", clicked);
                 allPosters[i].addEventListener("mouseover", borderAppear);
                 allPosters[i].addEventListener("mouseout", borderDisappear);
@@ -213,24 +251,18 @@ function seePopular() {
             var results = JSON.parse(this.responseText);
 
             for (var i = 0; i < results.results.length; i++) {
-                if (results.results[i].poster_path != null) {
+                if (results.results[i].poster_path != null && results.results[i].overview != "") {
                     var poster = document.createElement("img");
                     poster.setAttribute("src", "https://image.tmdb.org/t/p/original" + results.results[i].poster_path);
                     poster.setAttribute("class", "posters");
                     poster.setAttribute("id", results.results[i].id);
                     posterContainer.appendChild(poster);
                 }
-                if (results.results[i].poster_path == null) {
-                    var poster = document.createElement("img");
-                    poster.setAttribute("src", "poster_null.png");
-                    poster.setAttribute("class", "posters");
-                    poster.setAttribute("id", results.results[i].id);
-                    posterContainer.appendChild(poster);
-                }
+
             }
 
             for (var i = 0; i < allPosters.length; i++) {
-                allPosters[i].style.border = "5px solid white";
+                allPosters[i].style.border = "5px solid black";
                 allPosters[i].addEventListener("click", clicked);
                 allPosters[i].addEventListener("mouseover", borderAppear);
                 allPosters[i].addEventListener("mouseout", borderDisappear);
@@ -256,7 +288,7 @@ function seeTopRated() {
             var results = JSON.parse(this.responseText);
 
             for (var i = 0; i < results.results.length; i++) {
-                if (results.results[i].poster_path != null) {
+                if (results.results[i].poster_path != null && results.results[i].overview != "") {
                     var poster = document.createElement("img");
                     poster.setAttribute("src", "https://image.tmdb.org/t/p/original" + results.results[i].poster_path);
                     poster.setAttribute("class", "posters");
@@ -264,16 +296,10 @@ function seeTopRated() {
 
                     posterContainer.appendChild(poster);
                 }
-                if (results.results[i].poster_path == null) {
-                    var poster = document.createElement("img");
-                    poster.setAttribute("src", "poster_null.png");
-                    poster.setAttribute("class", "posters");
-                    poster.setAttribute("id", results.results[i].id);
-                    posterContainer.appendChild(poster);
-                }
+
             }
             for (var i = 0; i < allPosters.length; i++) {
-                allPosters[i].style.border = "5px solid white";
+                allPosters[i].style.border = "5px solid black";
                 allPosters[i].addEventListener("click", clicked);
                 allPosters[i].addEventListener("mouseover", borderAppear);
                 allPosters[i].addEventListener("mouseout", borderDisappear);
@@ -287,4 +313,3 @@ function seeTopRated() {
     xhttp.open("GET", "https://api.themoviedb.org/3/movie/top_rated?api_key=0c1cfc186512612b10c8d9f9fe03adb2&language=en-US&page=1", true);
     xhttp.send();
 }
-
